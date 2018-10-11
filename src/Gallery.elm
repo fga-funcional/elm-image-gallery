@@ -11,7 +11,7 @@ main =
 
 
 type alias Model =
-    { imgs : List String }
+    { imgs : List String, big_image : String }
 
 
 init : Model
@@ -39,6 +39,7 @@ init =
         , "https://countryandvictoriantimes.files.wordpress.com/2012/10/230897_10151196190118605_1343266549_n.jpg"
         , "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyiGok_rLazJLD-ddnGKjD33pa-rWGb3tskMrmaRpwnjom00kb"
         ]
+    , big_image = "https://countryandvictoriantimes.files.wordpress.com/2012/10/230897_10151196190118605_1343266549_n.jpg"
     }
 
 
@@ -47,14 +48,14 @@ init =
 
 
 type Msg
-    = Init (List String)
+    = ShowBig String
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Init s ->
-            { model | imgs = s }
+        ShowBig s ->
+            { model | big_image = s }
 
 
 
@@ -65,6 +66,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ h1 [] [ text "Welcome to the Gallery!!!" ]
+        , div [ style "text-align" "center" ] [ img [ src model.big_image, height 400 ] [] ]
         , show_imgs model.imgs
         ]
 
@@ -75,5 +77,5 @@ show_imgs img_list =
 
 show_img s =
     li [ style "display" "inline" ]
-        [ img [ src s, height 100 ] []
+        [ img [ src s, height 100, onClick (ShowBig s) ] []
         ]
