@@ -12,7 +12,7 @@ main =
 
 
 type alias Model =
-    { imgs : Array.Array String, big_image : String }
+    { imgs : Array.Array String, big_image : Int, left_arrow : String, right_arrow : String }
 
 
 init : Model
@@ -41,7 +41,9 @@ init =
             , "https://countryandvictoriantimes.files.wordpress.com/2012/10/230897_10151196190118605_1343266549_n.jpg"
             , "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyiGok_rLazJLD-ddnGKjD33pa-rWGb3tskMrmaRpwnjom00kb"
             ]
-    , big_image = "https://countryandvictoriantimes.files.wordpress.com/2012/10/230897_10151196190118605_1343266549_n.jpg"
+    , big_image = 0
+    , right_arrow = "https://www.clker.com/cliparts/J/H/k/9/3/R/go-arrow-next-hi.png"
+    , left_arrow = "https://cdn4.iconfinder.com/data/icons/iready-symbols-arrows-vol-1/28/004_008_left_prev_previous_home_arrow_circle1x-512.png"
     }
 
 
@@ -50,14 +52,22 @@ init =
 
 
 type Msg
-    = ShowBig String
+    = ShowBig Int
+    | NextImgBig
+    | PrevImgBig
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        ShowBig s ->
-            { model | big_image = s }
+        ShowBig idx ->
+            { model | big_image = idx }
+
+        NextImgBig ->
+            { model | big_image = model.big_image + 1 }
+
+        PrevImgBig ->
+            { model | big_image = model.big_image - 1 }
 
 
 
@@ -68,18 +78,31 @@ view : Model -> Html Msg
 view model =
     div []
         [ h1 [] [ text "Welcome to the Gallery!!!" ]
-        , div [ style "text-align" "center" ] [ img [ src model.big_image, height 400 ] [] ]
-        , show_imgs model.imgs
+        , div [ style "text-align" "center" ]
+            [ img [ src model.left_arrow, height 50, onClick PrevImgBig ] []
+            , img [ src (getImg model model.big_image), width 400 ] []
+            , img [ src model.right_arrow, height 50, onClick NextImgBig ] []
+            ]
+        , showImgs model.imgs
         ]
 
 
-show_imgs : Array.Array String -> Html Msg
-show_imgs img_array =
-    ul [] (Array.toList (Array.map show_img img_array))
+showImgs : Array.Array String -> Html Msg
+showImgs img_array =
+    ul [] (Array.toList (Array.indexedMap showImg img_array))
 
 
-show_img : String -> Html Msg
-show_img s =
+showImg : Int -> String -> Html Msg
+showImg idx s =
     li [ style "display" "inline" ]
-        [ img [ src s, height 100, onClick (ShowBig s) ] []
+        [ img [ src s, height 100, onClick (ShowBig idx) ] []
         ]
+
+
+getImg : Model -> Int -> String
+getImg model idx =
+    let
+        real_idx =
+            modBy (Array.length model.imgs) idx
+    in
+    Maybe.withDefault "" (Array.get real_idx model.imgs)
