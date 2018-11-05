@@ -104,10 +104,10 @@ view : Model -> Html Msg
 view model =
     div []
         [ h1 [] [ text "Welcome to the Gallery!!!" ]
-        , div [ style "text-align" "center" ]
-            [ img [ src model.left_arrow, height 50, onClick PrevImgBig ] []
-            , img [ src (getImg model model.big_image), width 400 ] []
-            , img [ src model.right_arrow, height 50, onClick NextImgBig ] []
+        , div [ class "mainDiv" ]
+            [ img [ class "arrowButton", src model.left_arrow, onClick PrevImgBig ] []
+            , img [ class "bigImg", src (getImg model model.big_image) ] []
+            , img [ class "arrowButton", src model.right_arrow, onClick NextImgBig ] []
             ]
         , showImgs model.imgs
         ]
@@ -115,13 +115,13 @@ view model =
 
 showImgs : Array.Array String -> Html Msg
 showImgs img_array =
-    ul [] (Array.toList (Array.indexedMap showImg img_array))
+    ul [ class "gallery" ] (Array.toList (Array.indexedMap showImg img_array))
 
 
 showImg : Int -> String -> Html Msg
 showImg idx s =
-    li [ style "display" "inline" ]
-        [ img [ src s, height 100, href "#", onClick (ShowBig idx) ] []
+    li [ class "imgListItem" ]
+        [ img [ src s, onClick (ShowBig idx), class "cardImg" ] []
         ]
 
 
