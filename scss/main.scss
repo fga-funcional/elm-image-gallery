@@ -28,6 +28,17 @@ h1 {
     }
 }
 
+.dismissButton {
+    max-width: 50px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
 .cardImg {
     padding: 5px;
     transition: 0.5s;
@@ -37,4 +48,16 @@ h1 {
         transform: scale(1.05);
         cursor: pointer;
     }
+}
+
+.bigImgModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.hiddenModal {
+    display: none;
 }

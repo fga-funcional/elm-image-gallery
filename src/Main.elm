@@ -20,7 +20,13 @@ main =
 
 
 type alias Model =
-    { imgs : Array.Array String, big_image : Int, left_arrow : String, right_arrow : String }
+    { imgs : Array.Array String
+    , big_image : Int
+    , left_arrow : String
+    , right_arrow : String
+    , dismiss_button : String
+    , show_modal : Bool
+    }
 
 
 initialImages =
@@ -56,10 +62,15 @@ leftArrowImage =
 rightArrowImage =
     "https://www.clker.com/cliparts/J/H/k/9/3/R/go-arrow-next-hi.png"
 
+dismissButton =
+    "https://www.freeiconspng.com/uploads/close-button-png-25.png"
+
+showModal = False
+
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model initialImages 0 leftArrowImage rightArrowImage
+    ( Model initialImages 0 leftArrowImage rightArrowImage dismissButton showModal
     , Cmd.none
     )
 
@@ -72,13 +83,14 @@ type Msg
     = ShowBig Int
     | NextImgBig
     | PrevImgBig
+    | CloseBig
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ShowBig idx ->
-            ( { model | big_image = idx }, Cmd.none )
+            ( { model | big_image = idx, show_modal = True }, Cmd.none )
 
         NextImgBig ->
             ( { model | big_image = model.big_image + 1 }, Cmd.none )
@@ -86,6 +98,8 @@ update msg model =
         PrevImgBig ->
             ( { model | big_image = model.big_image - 1 }, Cmd.none )
 
+        CloseBig ->
+            ( { model | show_modal = False }, Cmd.none )
 
 
 -- SUBSCRIPTIONS
@@ -104,14 +118,21 @@ view : Model -> Html Msg
 view model =
     div []
         [ h1 [] [ text "Welcome to the Gallery!!!" ]
-        , div [ class "mainDiv" ]
-            [ img [ class "arrowButton", src model.left_arrow, onClick PrevImgBig ] []
-            , img [ class "bigImg", src (getImg model model.big_image) ] []
-            , img [ class "arrowButton", src model.right_arrow, onClick NextImgBig ] []
-            ]
         , showImgs model.imgs
+        , displayModal model
         ]
 
+displayModal : Model -> Html Msg
+displayModal m =
+    if m.show_modal == True then
+        div [ class "bigImgModal" ]
+            [ img [ class "dismissButton", src m.dismiss_button, onClick CloseBig ] []
+            , img [ class "arrowButton", src m.left_arrow, onClick PrevImgBig ] []
+            , img [ class "bigImg", src (getImg m m.big_image) ] []
+            , img [ class "arrowButton", src m.right_arrow, onClick NextImgBig ] []
+            ]
+    else
+        div [ class "hiddenModal" ] []
 
 showImgs : Array.Array String -> Html Msg
 showImgs img_array =
@@ -121,7 +142,7 @@ showImgs img_array =
 showImg : Int -> String -> Html Msg
 showImg idx s =
     li [ class "imgListItem" ]
-        [ img [ src s, onClick (ShowBig idx), class "cardImg" ] []
+        [ img [ class "cardImg", src s, onClick (ShowBig idx) ] []
         ]
 
 
