@@ -38,12 +38,18 @@ type alias Image =
     , src : String
     }
 
+initialImages =
+    Array.fromList
+        [ (Image "" "" "https://www.rd.com/wp-content/uploads/2016/09/09_tricks_halloween_pumpkin_flawless_mini_pumpkin_fangs_mikeasaurus.jpg")
+        , (Image "" "" "https://i2-prod.walesonline.co.uk/incoming/article1996256.ece/ALTERNATES/s615/how-to-carve-a-halloween-pumpkin-like-a-pro-image-2-940941603.jpg")
+        ]
+
 leftArrowImage =
-    "https://cdn4.iconfinder.com/data/icons/iready-symbols-arrows-vol-1/28/004_008_left_prev_previous_home_arrow_circle1x-512.png"
+    "https://image.flaticon.com/icons/svg/60/60775.svg"
 
 
 rightArrowImage =
-    "https://www.clker.com/cliparts/J/H/k/9/3/R/go-arrow-next-hi.png"
+    "https://image.flaticon.com/icons/svg/60/60758.svg"
 
 dismissButton =
     "https://www.freeiconspng.com/uploads/close-button-png-25.png"
@@ -53,7 +59,7 @@ showModal = False
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model (Array.fromList []) 0 leftArrowImage rightArrowImage dismissButton showModal
+    ( Model initialImages 0 leftArrowImage rightArrowImage dismissButton showModal
     , Http.send GotImages getImages
     )
 
@@ -123,9 +129,9 @@ displayModal m =
     if m.show_modal == True then
         div [ class "bigImgModal" ]
             [ img [ class "dismissButton", src m.dismiss_button, onClick CloseBig ] []
-            , img [ class "arrowButton", src m.left_arrow, onClick PrevImgBig ] []
+            , img [ class "leftArrowButton", src m.left_arrow, onClick PrevImgBig ] []
+            , img [ class "rightArrowButton", src m.right_arrow, onClick NextImgBig ] []
             , img [ class "bigImg", src (getImg m m.big_image) ] []
-            , img [ class "arrowButton", src m.right_arrow, onClick NextImgBig ] []
             ]
     else
         div [ class "hiddenModal" ] []
@@ -147,7 +153,6 @@ getImg model idx =
         real_idx =
             modBy (Array.length model.imgs) idx
     in
-    --Maybe.withDefault "" (Dict.get "src" (Maybe.withDefault (Image "" "" "") (Array.get real_idx model.imgs)))
     (Maybe.withDefault (Image "" "" "") (Array.get real_idx model.imgs)).src
 
 ----------------------------

@@ -20,25 +20,6 @@ h1 {
     width: 400px;
 }
 
-.arrowButton {
-    height: 50px;
-
-    &:hover {
-        cursor: pointer;
-    }
-}
-
-.dismissButton {
-    max-width: 50px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-
-    &:hover {
-        cursor: pointer;
-    }
-}
-
 .cardImg {
     padding: 5px;
     transition: 0.5s;
@@ -60,4 +41,88 @@ h1 {
 
 .hiddenModal {
     display: none;
+}
+
+.bigImgModal .leftArrowButton {
+    height: 50px;
+    display: none;
+    float: left;
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    z-index: 1000;
+    padding: 5px;
+    transform: translate(0%, 0%);
+}
+
+.bigImgModal:hover .leftArrowButton {
+    height: 50px;
+    display: block;
+    float: left;
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    z-index: 1000;
+    padding: 5px;
+    transform: translate(0%, 0%);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.bigImgModal .rightArrowButton {
+    height: 50px;
+    display: none;
+    float: right;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    z-index: 1000;
+    padding: 5px;
+    transform: translate(0%, 0%);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.bigImgModal:hover .rightArrowButton {
+    height: 50px;
+    display: block;
+    float: right;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    z-index: 1000;
+    padding: 5px;
+    transform: translate(0%, 0%);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.bigImgModal .dismissButton {
+    max-width: 50px;
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.bigImgModal:hover .dismissButton {
+    max-width: 50px;
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
