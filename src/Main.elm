@@ -1,12 +1,12 @@
 module Main exposing (Model, Msg(..), init, main, update, view)
 
 import Array
-import Dict
 import Browser
-import Http exposing (..)
+import Dict
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Http exposing (..)
 import Json.Decode as D
 import Json.Encode as E
 
@@ -32,17 +32,13 @@ type alias Model =
     , show_modal : Bool
     }
 
+
 type alias Image =
     { title : String
     , description : String
     , src : String
     }
 
-initialImages =
-    Array.fromList
-        [ (Image "" "" "https://www.rd.com/wp-content/uploads/2016/09/09_tricks_halloween_pumpkin_flawless_mini_pumpkin_fangs_mikeasaurus.jpg")
-        , (Image "" "" "https://i2-prod.walesonline.co.uk/incoming/article1996256.ece/ALTERNATES/s615/how-to-carve-a-halloween-pumpkin-like-a-pro-image-2-940941603.jpg")
-        ]
 
 leftArrowImage =
     "https://image.flaticon.com/icons/svg/60/60775.svg"
@@ -51,15 +47,18 @@ leftArrowImage =
 rightArrowImage =
     "https://image.flaticon.com/icons/svg/60/60758.svg"
 
+
 dismissButton =
     "https://www.freeiconspng.com/uploads/close-button-png-25.png"
 
-showModal = False
+
+showModal =
+    False
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model initialImages 0 leftArrowImage rightArrowImage dismissButton showModal
+    ( Model (Array.fromList []) 0 leftArrowImage rightArrowImage dismissButton showModal
     , Http.send GotImages getImages
     )
 
@@ -104,6 +103,7 @@ update msg model =
                     ( { model | imgs = images }, Cmd.none )
 
 
+
 -- SUBSCRIPTIONS
 
 
@@ -118,23 +118,26 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ class "main" ]
         [ h1 [] [ text "Welcome to the Gallery!!!" ]
         , showImgs model.imgs
         , displayModal model
         ]
 
+
 displayModal : Model -> Html Msg
 displayModal m =
     if m.show_modal == True then
-        div [ class "bigImgModal" ]
+        div []
             [ img [ class "dismissButton", src m.dismiss_button, onClick CloseBig ] []
             , img [ class "leftArrowButton", src m.left_arrow, onClick PrevImgBig ] []
             , img [ class "rightArrowButton", src m.right_arrow, onClick NextImgBig ] []
             , img [ class "bigImg", src (getImg m m.big_image) ] []
             ]
+
     else
         div [ class "hiddenModal" ] []
+
 
 showImgs : Array.Array Image -> Html Msg
 showImgs img_array =
@@ -147,6 +150,7 @@ showImg idx image =
         [ img [ class "cardImg", src image.src, onClick (ShowBig idx) ] []
         ]
 
+
 getImg : Model -> Int -> String
 getImg model idx =
     let
@@ -155,18 +159,22 @@ getImg model idx =
     in
     (Maybe.withDefault (Image "" "" "") (Array.get real_idx model.imgs)).src
 
+
+
 ----------------------------
 -- Decoders
 ----------------------------
 
+
 imageDecoder : D.Decoder (Array.Array Image)
 imageDecoder =
-    D.array (
-        D.map3 Image
+    D.array
+        (D.map3 Image
             (D.field "title" D.string)
             (D.field "description" D.string)
             (D.field "src" D.string)
-    )
+        )
+
 
 getImages : Http.Request (Array.Array Image)
 getImages =
