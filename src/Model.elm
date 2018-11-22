@@ -6,11 +6,11 @@ import Json.Decode as D
 
 type alias Model =
     { imgs : Array.Array Image
-    , big_image : Int
-    , left_arrow : String
-    , right_arrow : String
-    , dismiss_button : String
-    , show_modal : Bool
+    , selectedImg : Int
+    , leftArrow : String
+    , rightArrow : String
+    , dismissButton : String
+    , showModal : Bool
     }
 
 
@@ -50,7 +50,7 @@ init =
 
 
 getCurrentUrl m =
-    Maybe.withDefault "" <| Maybe.map .src (Array.get m.big_image m.imgs)
+    Maybe.withDefault "" <| Maybe.map .src (Array.get m.selectedImg m.imgs)
 
 
 imageDecoder : D.Decoder (Array.Array Image)

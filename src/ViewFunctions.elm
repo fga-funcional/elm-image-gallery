@@ -1,4 +1,4 @@
-module ViewFunctions exposing (getImg, getUrlAttribute, showImg, showImgs)
+module ViewFunctions exposing (getUrlAttribute, showImg, showImgs)
 
 import Array
 import Html exposing (..)
@@ -16,17 +16,8 @@ showImgs img_array =
 showImg : Int -> Image -> Html Msg
 showImg idx image =
     li [ class "imgListItem" ]
-        [ img [ class "cardImg", src image.src, onClick (ShowBig idx) ] []
+        [ img [ class "cardImg", src image.src, onClick (ShowSelected idx) ] []
         ]
-
-
-getImg : Model -> Int -> String
-getImg model idx =
-    let
-        real_idx =
-            modBy (Array.length model.imgs) idx
-    in
-    (Maybe.withDefault (Image "" "" "") (Array.get real_idx model.imgs)).src
 
 
 getUrlAttribute : String -> String

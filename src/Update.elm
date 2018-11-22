@@ -6,33 +6,38 @@ import Model exposing (Image, Model, imageDecoder)
 
 
 type Msg
-    = ShowBig Int
-    | GotImages (Result Http.Error (Array.Array Image))
-    | GetImages
-    | NextImgBig
-    | PrevImgBig
-    | CloseBig
+    = ShowSelected Int
+    | HideSelected
+    | SelectNext
+    | SelectPrev
+    | FetchedImg (Result Http.Error (Array.Array Image))
+    | FetchImgs
+
+
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( Model.init, Http.send FetchedImg fetchImages )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ShowBig idx ->
-            ( { model | big_image = idx, show_modal = True }, Cmd.none )
+        ShowSelected idx ->
+            ( { model | selectedImg = idx, showModal = True }, Cmd.none )
 
-        NextImgBig ->
-            ( { model | big_image = model.big_image + 1 }, Cmd.none )
+        SelectNext ->
+            ( { model | selectedImg = fixIdx model <| model.selectedImg + 1 }, Cmd.none )
 
-        PrevImgBig ->
-            ( { model | big_image = model.big_image - 1 }, Cmd.none )
+        SelectPrev ->
+            ( { model | selectedImg = fixIdx model <| model.selectedImg - 1 }, Cmd.none )
 
-        CloseBig ->
-            ( { model | show_modal = False }, Cmd.none )
+        HideSelected ->
+            ( { model | showModal = False }, Cmd.none )
 
-        GetImages ->
-            ( model, Http.send GotImages getImages )
+        FetchImgs ->
+            ( model, Http.send FetchedImg fetchImages )
 
-        GotImages result ->
+        FetchedImg result ->
             case result of
                 Err httpError ->
                     ( model, Cmd.none )
@@ -41,9 +46,9 @@ update msg model =
                     ( { model | imgs = images }, Cmd.none )
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
-    ( Model.init, Http.send GotImages getImages )
+fixIdx : Model -> Int -> Int
+fixIdx model idx =
+    modBy (Array.length model.imgs) idx
 
 
 
@@ -59,6 +64,6 @@ subscriptions model =
 -- HTTP
 
 
-getImages : Http.Request (Array.Array Image)
-getImages =
+fetchImages : Http.Request (Array.Array Image)
+fetchImages =
     Http.get "http://localhost:3000/images" imageDecoder

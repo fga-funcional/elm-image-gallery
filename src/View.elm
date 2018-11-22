@@ -20,13 +20,13 @@ view model =
 
 displayModal : Model -> Html Msg
 displayModal m =
-    if m.show_modal == True then
+    if m.showModal == True then
         div []
             [ div [ class "overlay" ] []
             , div [ class "modal", style "background-image" (getUrlAttribute <| getCurrentUrl m) ]
-                [ img [ class "dismissButton", src m.dismiss_button, onClick CloseBig ] []
-                , img [ class "leftArrowButton", src m.left_arrow, onClick PrevImgBig ] []
-                , img [ class "rightArrowButton", src m.right_arrow, onClick NextImgBig ] []
+                [ img [ class "dismissButton", src m.dismissButton, onClick HideSelected ] []
+                , img [ class "leftArrowButton", src m.leftArrow, onClick SelectPrev ] []
+                , img [ class "rightArrowButton", src m.rightArrow, onClick SelectNext ] []
                 ]
             ]
 
