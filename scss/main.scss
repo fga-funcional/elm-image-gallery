@@ -26,12 +26,12 @@ h1 {
     height: 100px;
 
     &:hover {
-        transform: scale(1.10);
+        transform: scale(1.07);
         cursor: pointer;
     }
 }
 
-.overlay, .modal {
+.overlay, .bigScreenModal {
     position: fixed;
 	height: 100%;
 	width: 100%;
@@ -44,7 +44,7 @@ h1 {
 	opacity: 0.8;
 }
 
-.modal {
+.bigScreenModal {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -54,90 +54,41 @@ h1 {
     display: none;
 }
 
+.leftArrowButton, .rightArrowButton, .dismissButton {
+	opacity: 0.2;
+    display: none;
+    transition: all 200ms ease-in-out;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -ms-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+}
+.bigScreenModal:hover .leftArrowButton, .bigScreenModal:hover .rightArrowButton, .bigScreenModal:hover .dismissButton {
+    display: block;
+
+    &:hover {
+        cursor: pointer;
+		opacity: 1.0;
+    }
+}
+
+.leftArrowButton, .rightArrowButton {
+    position: fixed;
+	height:60pt;
+    top: 50%;
+    padding: 5px;
+}
+
 .leftArrowButton {
-    position: absolute;
-	max-height:30pt;
-    display: none;
-    float: left;
-    left: 0px;
-    top: 50%;
-    z-index: 1000;
-    padding: 5px;
-    transform: translate(0%, 0%);
+    left: 0%;
 }
 
-.modal:hover .leftArrowButton {
-    position: absolute;
-	max-height:50px;
-    height: 30%;
-    display: block;
-    float: left;
-    left: 0px;
-    top: 50%;
-    z-index: 1000;
-    padding: 5px;
-    transform: translate(0%, 0%);
-
-    &:hover {
-        cursor: pointer;
-    }
+.rightArrowButton {
+    right: 0%;
 }
 
-.modal .rightArrowButton {
-    position: absolute;
-	max-height:50px;
-    height: 30%;
-    display: none;
-    float: right;
-    right: 0px;
-    top: 50%;
-    z-index: 1000;
-    padding: 5px;
-    transform: translate(0%, 0%);
-
-    &:hover {
-        cursor: pointer;
-    }
-}
-
-.modal:hover .rightArrowButton {
-    position: absolute;
-	max-height:50px;
-    height: 30%;
-    display: block;
-    float: right;
-    right: 0px;
-    top: 50%;
-    z-index: 1000;
-    padding: 5px;
-    transform: translate(0%, 0%);
-
-    &:hover {
-        cursor: pointer;
-    }
-}
-
-.modal .dismissButton {
-    position: absolute;
-	width: 10%;
-    max-width: 20px;
-    display: none;
-    top: 0px;
-    right: 0px;
-
-    &:hover {
-        cursor: pointer;
-    }
-}
-
-.modal:hover .dismissButton {
-    position: absolute;
-    max-width: 50px;
-    display: block;
-    top: 0px;
-    right: 0px;
-
-    &:hover {
-        cursor: pointer;
-    }
+.dismissButton {
+    position: fixed;
+    right: 0%;
+	height: 30pt;
 }

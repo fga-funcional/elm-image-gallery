@@ -38,7 +38,7 @@ rightArrowImage =
 
 
 dismissButton =
-    "https://www.freeiconspng.com/uploads/close-button-png-25.png"
+    "https://png.pngtree.com/svg/20170503/pop_ico_close_1353709.png"
 
 
 showModal =
