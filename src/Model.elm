@@ -7,10 +7,12 @@ import Json.Decode as D
 type alias Model =
     { imgs : Array.Array Image
     , selectedImg : Int
-    , leftArrow : String
-    , rightArrow : String
-    , dismissButton : String
     , showModal : Bool
+    , leftArrowButton : String
+    , rightArrowButton : String
+    , dismissButton : String
+    , realSizeButton : String
+    , fullScreenButton : String
     }
 
 
@@ -37,8 +39,16 @@ rightArrowImage =
     "https://image.flaticon.com/icons/svg/60/60758.svg"
 
 
-dismissButton =
+dismissImage =
     "https://png.pngtree.com/svg/20170503/pop_ico_close_1353709.png"
+
+
+realSizeImage =
+    "https://cdn.iconscout.com/icon/premium/png-256-thumb/zoom-to-actual-size-1-561733.png"
+
+
+fullScreenImage =
+    "https://static.thenounproject.com/png/280-200.png"
 
 
 showModal =
@@ -46,7 +56,7 @@ showModal =
 
 
 init =
-    Model initialImages initialBigImage leftArrowImage rightArrowImage dismissButton showModal
+    Model initialImages initialBigImage showModal leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage
 
 
 getCurrentUrl m =

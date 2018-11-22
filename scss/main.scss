@@ -35,8 +35,8 @@ h1 {
     position: fixed;
 	height: 100%;
 	width: 100%;
-    top: 0%;
-    left: 0%;
+    top: 0;
+    left: 0;
 }
 
 .overlay {
@@ -54,17 +54,16 @@ h1 {
     display: none;
 }
 
-.leftArrowButton, .rightArrowButton, .dismissButton {
+.leftArrowButton, .rightArrowButton, .dismissButton, .toolButton {
 	opacity: 0.2;
-    display: none;
     transition: all 200ms ease-in-out;
+	# display: none;
     -webkit-transition: all 200ms ease-in-out;
     -moz-transition: all 200ms ease-in-out;
     -ms-transition: all 200ms ease-in-out;
     -o-transition: all 200ms ease-in-out;
 }
-.bigScreenModal:hover .leftArrowButton, .bigScreenModal:hover .rightArrowButton, .bigScreenModal:hover .dismissButton {
-    display: block;
+.bigScreenModal:hover .leftArrowButton, .bigScreenModal:hover .rightArrowButton, .bigScreenModal:hover .dismissButton, .bigScreenModal:hover .toolButton {
 
     &:hover {
         cursor: pointer;
@@ -80,15 +79,29 @@ h1 {
 }
 
 .leftArrowButton {
-    left: 0%;
+    left: 0;
 }
 
 .rightArrowButton {
-    right: 0%;
+    right: 0;
 }
 
 .dismissButton {
     position: fixed;
-    right: 0%;
+    right: 0;
 	height: 30pt;
+}
+
+.toolsBar {
+    position: fixed;
+	height: 20pt;
+    bottom: 0;
+	right: 0;
+	padding-right: 30pt;
+	padding-bottom: 5pt;
+}
+
+.toolButton {
+	height: 100%;
+	margin: 2pt;
 }
