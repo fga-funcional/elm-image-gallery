@@ -1,5 +1,6 @@
 module View exposing (displayModal, view)
 
+import Array
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -20,11 +21,13 @@ view model =
 displayModal : Model -> Html Msg
 displayModal m =
     if m.show_modal == True then
-        div [ class "bigImgModal" ]
-            [ img [ class "dismissButton", src m.dismiss_button, onClick CloseBig ] []
-            , img [ class "leftArrowButton", src m.left_arrow, onClick PrevImgBig ] []
-            , img [ class "rightArrowButton", src m.right_arrow, onClick NextImgBig ] []
-            , img [ class "bigImg", src (getImg m m.big_image) ] []
+        div []
+            [ div [ class "overlay" ] []
+            , div [ class "modal", style "background-image" (getUrlAttribute <| getCurrentUrl m) ]
+                [ img [ class "dismissButton", src m.dismiss_button, onClick CloseBig ] []
+                , img [ class "leftArrowButton", src m.left_arrow, onClick PrevImgBig ] []
+                , img [ class "rightArrowButton", src m.right_arrow, onClick NextImgBig ] []
+                ]
             ]
 
     else

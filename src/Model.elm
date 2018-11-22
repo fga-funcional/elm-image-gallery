@@ -1,4 +1,4 @@
-module Model exposing (Image, Model, imageDecoder, init)
+module Model exposing (Image, Model, getCurrentUrl, imageDecoder, init)
 
 import Array
 import Json.Decode as D
@@ -47,6 +47,10 @@ showModal =
 
 init =
     Model initialImages initialBigImage leftArrowImage rightArrowImage dismissButton showModal
+
+
+getCurrentUrl m =
+    Maybe.withDefault "" <| Maybe.map .src (Array.get m.big_image m.imgs)
 
 
 imageDecoder : D.Decoder (Array.Array Image)

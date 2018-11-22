@@ -20,27 +20,34 @@ h1 {
     display: inline;
 }
 
-.bigImg {
-    width: 400px;
-}
-
 .cardImg {
     padding: 5px;
     transition: 0.5s;
     height: 100px;
 
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.10);
         cursor: pointer;
     }
 }
 
-.bigImgModal {
+.overlay, .modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
+	height: 100%;
+	width: 100%;
+    top: 0%;
+    left: 0%;
+}
+
+.overlay {
+	background-color: black;
+	opacity: 0.8;
+}
+
+.modal {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 
 .hiddenModal {
@@ -48,10 +55,10 @@ h1 {
 }
 
 .leftArrowButton {
-    height: 50px;
+    position: absolute;
+	max-height:30pt;
     display: none;
     float: left;
-    position: absolute;
     left: 0px;
     top: 50%;
     z-index: 1000;
@@ -59,11 +66,12 @@ h1 {
     transform: translate(0%, 0%);
 }
 
-.bigImgModal:hover .leftArrowButton {
-    height: 50px;
+.modal:hover .leftArrowButton {
+    position: absolute;
+	max-height:50px;
+    height: 30%;
     display: block;
     float: left;
-    position: absolute;
     left: 0px;
     top: 50%;
     z-index: 1000;
@@ -75,11 +83,12 @@ h1 {
     }
 }
 
-.bigImgModal .rightArrowButton {
-    height: 50px;
+.modal .rightArrowButton {
+    position: absolute;
+	max-height:50px;
+    height: 30%;
     display: none;
     float: right;
-    position: absolute;
     right: 0px;
     top: 50%;
     z-index: 1000;
@@ -91,11 +100,12 @@ h1 {
     }
 }
 
-.bigImgModal:hover .rightArrowButton {
-    height: 50px;
+.modal:hover .rightArrowButton {
+    position: absolute;
+	max-height:50px;
+    height: 30%;
     display: block;
     float: right;
-    position: absolute;
     right: 0px;
     top: 50%;
     z-index: 1000;
@@ -107,10 +117,11 @@ h1 {
     }
 }
 
-.bigImgModal .dismissButton {
-    max-width: 50px;
-    display: none;
+.modal .dismissButton {
     position: absolute;
+	width: 10%;
+    max-width: 20px;
+    display: none;
     top: 0px;
     right: 0px;
 
@@ -119,10 +130,10 @@ h1 {
     }
 }
 
-.bigImgModal:hover .dismissButton {
+.modal:hover .dismissButton {
+    position: absolute;
     max-width: 50px;
     display: block;
-    position: absolute;
     top: 0px;
     right: 0px;
 

@@ -1,4 +1,4 @@
-module ViewFunctions exposing (getImg, showImg, showImgs)
+module ViewFunctions exposing (getImg, getUrlAttribute, showImg, showImgs)
 
 import Array
 import Html exposing (..)
@@ -27,3 +27,8 @@ getImg model idx =
             modBy (Array.length model.imgs) idx
     in
     (Maybe.withDefault (Image "" "" "") (Array.get real_idx model.imgs)).src
+
+
+getUrlAttribute : String -> String
+getUrlAttribute imgUrl =
+    "url(\"" ++ imgUrl ++ "\")"
