@@ -7,6 +7,8 @@ import Model exposing (Image, Model, imageDecoder)
 
 type Msg
     = ShowSelected Int
+    | ShowRealSize
+    | ShowResized
     | HideSelected
     | SelectNext
     | SelectPrev
@@ -24,6 +26,12 @@ update msg model =
     case msg of
         ShowSelected idx ->
             ( { model | selectedImg = idx, showModal = True }, Cmd.none )
+
+        ShowResized ->
+            ( { model | showRealSize = False }, Cmd.none )
+
+        ShowRealSize ->
+            ( { model | showRealSize = True }, Cmd.none )
 
         SelectNext ->
             ( { model | selectedImg = fixIdx model <| model.selectedImg + 1 }, Cmd.none )

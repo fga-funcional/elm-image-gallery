@@ -8,6 +8,7 @@ type alias Model =
     { imgs : Array.Array Image
     , selectedImg : Int
     , showModal : Bool
+    , showRealSize : Bool
     , leftArrowButton : String
     , rightArrowButton : String
     , dismissButton : String
@@ -55,8 +56,12 @@ showModal =
     False
 
 
+showRealSize =
+    False
+
+
 init =
-    Model initialImages initialBigImage showModal leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage
+    Model initialImages initialBigImage showModal showRealSize leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage
 
 
 getCurrentUrl m =

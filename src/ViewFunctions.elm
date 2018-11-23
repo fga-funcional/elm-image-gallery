@@ -1,4 +1,4 @@
-module ViewFunctions exposing (getUrlAttribute, showImg, showImgs)
+module ViewFunctions exposing (getRealSizeAttribute, getUrlAttribute, showImg, showImgs)
 
 import Array
 import Html exposing (..)
@@ -9,8 +9,8 @@ import Update exposing (..)
 
 
 showImgs : Array.Array Image -> Html Msg
-showImgs img_array =
-    ul [ class "gallery" ] (Array.toList (Array.indexedMap showImg img_array))
+showImgs imgArray =
+    ul [ class "gallery" ] (Array.toList (Array.indexedMap showImg imgArray))
 
 
 showImg : Int -> Image -> Html Msg
@@ -18,6 +18,15 @@ showImg idx image =
     li [ class "imgListItem" ]
         [ img [ class "cardImg", src image.src, onClick (ShowSelected idx) ] []
         ]
+
+
+getRealSizeAttribute : Model -> String
+getRealSizeAttribute m =
+    if m.showRealSize then
+        "auto"
+
+    else
+        "contain"
 
 
 getUrlAttribute : String -> String
