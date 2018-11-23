@@ -1,4 +1,4 @@
-module View exposing (displayModal, view)
+module View exposing (view)
 
 import Array
 import Html exposing (..)
@@ -14,25 +14,20 @@ view model =
     div [ class "main" ]
         [ h1 [] [ text "Welcome to the Gallery!!!" ]
         , showImgs model.imgs
-        , displayModal model
+        , bigScreenModal model
         ]
 
 
-displayModal : Model -> Html Msg
-displayModal m =
-    if m.showModal == True then
-        div []
-            [ div [ class "overlay" ] []
-            , div [ class "bigScreenModal", style "background-image" (getUrlAttribute <| getCurrentUrl m), style "background-size" <| getRealSizeAttribute m ]
-                [ img [ class "dismissButton", src m.dismissButton, onClick HideSelected ] []
-                , img [ class "leftArrowButton", src m.leftArrowButton, onClick SelectPrev ] []
-                , img [ class "rightArrowButton", src m.rightArrowButton, onClick SelectNext ] []
-                , div [ class "toolsBar" ]
-                    [ img [ class "toolButton", src m.realSizeButton, onClick ShowRealSize ] []
-                    , img [ class "toolButton", src m.fullScreenButton, onClick ShowResized ] []
-                    ]
+bigScreenModal m =
+    div [ style "display" <| getShowBigScreenAttribute m ]
+        [ div [ class "overlay" ] []
+        , div [ class "bigScreenModal", style "background-image" (getUrlAttribute <| getCurrentUrl m), style "background-size" <| getRealSizeAttribute m ]
+            [ img [ class "dismissButton", src m.dismissButton, onClick HideSelected ] []
+            , img [ class "leftArrowButton", src m.leftArrowButton, onClick SelectPrev ] []
+            , img [ class "rightArrowButton", src m.rightArrowButton, onClick SelectNext ] []
+            , div [ class "toolsBar" ]
+                [ img [ class "toolButton", src m.realSizeButton, onClick ShowRealSize ] []
+                , img [ class "toolButton", src m.fullScreenButton, onClick ShowResized ] []
                 ]
             ]
-
-    else
-        div [ class "hiddenModal" ] []
+        ]

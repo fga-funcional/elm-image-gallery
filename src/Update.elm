@@ -25,7 +25,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ShowSelected idx ->
-            ( { model | selectedImg = idx, showModal = True }, Cmd.none )
+            ( { model | selectedImg = idx, showBigScreen = True }, Cmd.none )
 
         ShowResized ->
             ( { model | showRealSize = False }, Cmd.none )
@@ -40,7 +40,7 @@ update msg model =
             ( { model | selectedImg = fixIdx model <| model.selectedImg - 1 }, Cmd.none )
 
         HideSelected ->
-            ( { model | showModal = False }, Cmd.none )
+            ( { model | showBigScreen = False }, Cmd.none )
 
         FetchImgs ->
             ( model, Http.send FetchedImg fetchImages )

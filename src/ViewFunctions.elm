@@ -1,4 +1,4 @@
-module ViewFunctions exposing (getRealSizeAttribute, getUrlAttribute, showImg, showImgs)
+module ViewFunctions exposing (getRealSizeAttribute, getShowBigScreenAttribute, getUrlAttribute, showImg, showImgs)
 
 import Array
 import Html exposing (..)
@@ -27,6 +27,15 @@ getRealSizeAttribute m =
 
     else
         "contain"
+
+
+getShowBigScreenAttribute : Model -> String
+getShowBigScreenAttribute m =
+    if m.showBigScreen then
+        "inline"
+
+    else
+        "none"
 
 
 getUrlAttribute : String -> String

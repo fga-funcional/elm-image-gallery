@@ -7,7 +7,7 @@ import Json.Decode as D
 type alias Model =
     { imgs : Array.Array Image
     , selectedImg : Int
-    , showModal : Bool
+    , showBigScreen : Bool
     , showRealSize : Bool
     , leftArrowButton : String
     , rightArrowButton : String
@@ -52,7 +52,7 @@ fullScreenImage =
     "https://static.thenounproject.com/png/280-200.png"
 
 
-showModal =
+showBigScreen =
     False
 
 
@@ -61,7 +61,7 @@ showRealSize =
 
 
 init =
-    Model initialImages initialBigImage showModal showRealSize leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage
+    Model initialImages initialBigImage showBigScreen showRealSize leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage
 
 
 getCurrentUrl m =
