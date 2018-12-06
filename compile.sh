@@ -9,6 +9,8 @@ STATIC_FOLDER=static
 SOURCE_FOLDER=src
 SASS_FOLDER=scss
 
+TMP_FOLDER=/tmp/.elm_compiler
+
 aux_compile_elm() {
 	echo "Compiling Elm..." &&
 	elm make $SOURCE_FOLDER/Main.elm --optimize --output=$STATIC_FOLDER/$JS_FILE
@@ -19,22 +21,33 @@ minifying_js() {
 	(uglifyjs $STATIC_FOLDER/$JS_FILE --compress 'pure_funcs="F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9",pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output=$STATIC_FOLDER/$JS_MINIFIED_FILE)
 }
 
-compile_elm() {
-	cp $SOURCE_FOLDER/Main.elm /tmp/.OldMain.elm
+copy_files() {
+	rm -rf $TMP_FOLDER && mkdir -p $TMP_FOLDER
+	find $PWD/$SOURCE_FOLDER -name *.elm > $TMP_FOLDER/.files_list
+	cat $TMP_FOLDER/.files_list | xargs -I file cp file $TMP_FOLDER/
+}
 
-	aux_compile_elm && echo "" && minifying_js
+compile_and_minify() {
+	aux_compile_elm && echo "" && minifying_js && echo "OK!"
+}
+
+compile_elm() {
+	compile_and_minify
+	copy_files
 
 	if [ "$1" == "watch" ]; then
 		echo -e "\n\n\nEntered Watch mode"
 		echo -e "Waiting for changes..."
 		while true
 		do
-			cmp --silent $SOURCE_FOLDER/Main.elm /tmp/.OldMain.elm
-			if [ $? -eq 1 ]; then
-				aux_compile_elm && echo "" && minifying_js
-				cp $SOURCE_FOLDER/Main.elm /tmp/.OldMain.elm
-				echo -e "\n\n\nWaiting for changes..."
-			fi
+			for file in $(cat $TMP_FOLDER/.files_list); do
+				cmp --silent $file $TMP_FOLDER/$(basename $file)
+				if [ $? -eq 1 ]; then
+					compile_and_minify
+					copy_files
+					echo -e "\n\n\nWaiting for changes..."
+				fi
+			done
 			sleep 2
 		done
 	fi

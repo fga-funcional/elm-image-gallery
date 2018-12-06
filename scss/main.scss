@@ -20,113 +20,164 @@ h1 {
     display: inline;
 }
 
-.bigImg {
-    width: 400px;
-}
-
 .cardImg {
-    padding: 5px;
+    padding: 5pt;
     transition: 0.5s;
-    height: 100px;
+    height: 75pt;
 
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.07);
         cursor: pointer;
     }
 }
 
-.bigImgModal {
+.overlay, .bigImage {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
+	height: 100%;
+	width: 100%;
+    top: 0;
+    left: 0;
 }
 
-.hiddenModal {
-    display: none;
+.bigScreenModal {
+    position: fixed;
+	height: 100%;
+	width: 100%;
 }
 
-.bigImgModal .leftArrowButton {
-    height: 50px;
-    display: none;
-    float: left;
-    position: absolute;
-    left: 0px;
-    top: 50%;
-    z-index: 1000;
-    padding: 5px;
-    transform: translate(0%, 0%);
+.overlay {
+	background-color: black;
+	opacity: 0.8;
 }
 
-.bigImgModal:hover .leftArrowButton {
-    height: 50px;
-    display: block;
-    float: left;
-    position: absolute;
-    left: 0px;
-    top: 50%;
-    z-index: 1000;
-    padding: 5px;
-    transform: translate(0%, 0%);
+.bigImage {
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.leftArrowButton, .rightArrowButton, .dismissButton, .toolButton {
+	opacity: 0.4;
+    transition: all 200ms ease-in-out;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -ms-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+}
+.bigScreenModal:hover .leftArrowButton, .bigScreenModal:hover .rightArrowButton, .bigScreenModal:hover .dismissButton, .bigScreenModal:hover .toolButton {
 
     &:hover {
         cursor: pointer;
+        opacity: 1.0;
     }
 }
 
-.bigImgModal .rightArrowButton {
-    height: 50px;
-    display: none;
-    float: right;
-    position: absolute;
-    right: 0px;
+.leftArrowButton, .rightArrowButton {
+    position: fixed;
+	height:60pt;
+    padding: 5pt;
     top: 50%;
-    z-index: 1000;
-    padding: 5px;
-    transform: translate(0%, 0%);
+    transform: translate(0, -50%);
+}
+
+.leftArrowButton {
+    left: 0;
+}
+
+.rightArrowButton {
+    right: 0;
+}
+
+.dismissButton {
+    position: fixed;
+    right: 0;
+    height: 30pt;
+    padding-right: 17pt;
+    padding-top: 5pt;
+}
+
+.toolsBar {
+    position: fixed;
+	height: 20pt;
+    bottom: 0;
+	right: 0;
+	padding-right: 30pt;
+    padding-bottom: 5pt;
+    display: inline-block;
 
     &:hover {
-        cursor: pointer;
+        opacity: 0.7;
+        background-color: #7c7b7b;
     }
 }
 
-.bigImgModal:hover .rightArrowButton {
-    height: 50px;
-    display: block;
-    float: right;
-    position: absolute;
-    right: 0px;
+.toolButton {
+	height: 100%;
+	margin: 3pt;
+}
+
+.counter {
+	position: fixed;
+	color: gray;
+	bottom: 0;
+	left: 0;
+	padding-bottom: 10pt;
+	padding-left: 12pt;
+	font-weight: bold;
+	font-size: 22;
+}
+
+.arrowDivLeft, .arrowDivRight {
+    position: fixed;
+    height:70%;
+    width: 70pt;
     top: 50%;
-    z-index: 1000;
-    padding: 5px;
-    transform: translate(0%, 0%);
+    transform: translate(0, -50%);
 
     &:hover {
-        cursor: pointer;
+        opacity: 0.4;
+        background-color: #7c7b7b;
+        transition: all 200ms ease-in-out;
+        -webkit-transition: all 200ms ease-in-out;
+        -moz-transition: all 200ms ease-in-out;
+        -ms-transition: all 200ms ease-in-out;
+        -o-transition: all 200ms ease-in-out;
     }
 }
 
-.bigImgModal .dismissButton {
-    max-width: 50px;
-    display: none;
-    position: absolute;
-    top: 0px;
-    right: 0px;
+.arrowDivLeft {
+    left: 0;
+}
+
+.arrowDivRight {
+    right: 0;
+}
+
+.dismissButtonDiv {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 40pt;
+    padding: 5pt;
+    width: 60pt;
+    display: inline-block;
 
     &:hover {
-        cursor: pointer;
+        opacity: 0.4;
+        background-color: #7c7b7b;
+        transition: all 200ms ease-in-out;
+        -webkit-transition: all 200ms ease-in-out;
+        -moz-transition: all 200ms ease-in-out;
+        -ms-transition: all 200ms ease-in-out;
+        -o-transition: all 200ms ease-in-out;
     }
 }
 
-.bigImgModal:hover .dismissButton {
-    max-width: 50px;
-    display: block;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-
-    &:hover {
-        cursor: pointer;
-    }
+.descriptionDiv {
+    position: fixed;
+    bottom: 0;
+    text-shadow: 2pt 2pt 4pt #000000;
+    color: gray;
+    font-size: 15pt;
+    padding-left: 6pt;
+    padding-bottom: 30pt;
 }
