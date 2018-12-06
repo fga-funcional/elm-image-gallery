@@ -53,7 +53,6 @@ h1 {
 .bigImage {
 	background-position: center;
 	background-repeat: no-repeat;
-	cursor: "move";
 }
 
 .leftArrowButton, .rightArrowButton, .dismissButton, .toolButton {
@@ -121,9 +120,10 @@ h1 {
 	color: gray;
 	bottom: 0;
 	left: 0;
-	padding: 10pt;
+	padding-bottom: 10pt;
+	padding-left: 12pt;
 	font-weight: bold;
-	font-size: 25;
+	font-size: 22;
 }
 
 .arrowDivLeft, .arrowDivRight {
@@ -176,7 +176,7 @@ h1 {
     position: fixed;
     bottom: 0;
     text-shadow: 2pt 2pt 4pt #000000;
-    color: rgb(204, 196, 196);
+    color: gray;
     font-size: 15pt;
     padding-left: 6pt;
     padding-bottom: 30pt;

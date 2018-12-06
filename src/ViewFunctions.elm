@@ -1,4 +1,4 @@
-module ViewFunctions exposing (getImageCounter, getRealSizeAttribute, getShowBigScreenAttribute, getTranformScaleAttribute, getTranformTranslateAttribute, getUrlAttribute, showImg, showImgs)
+module ViewFunctions exposing (getCursor, getImageCounter, getRealSizeAttribute, getShowBigScreenAttribute, getTranformScaleAttribute, getTranformTranslateAttribute, getUrlAttribute, showImg, showImgs)
 
 import Array
 import Html exposing (..)
@@ -69,6 +69,15 @@ getUrlAttribute imgUrl =
     "url(\"" ++ imgUrl ++ "\")"
 
 
+getCursor : Model -> String
+getCursor m =
+    if m.bigImageScale > 1 then
+        "move"
+
+    else
+        ""
+
+
 getImageCounter : Model -> String
 getImageCounter m =
-    fromInt m.selectedImg ++ "/" ++ (fromInt <| Array.length m.imgs)
+    fromInt (m.selectedImg + 1) ++ "/" ++ (fromInt <| Array.length m.imgs)

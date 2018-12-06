@@ -28,6 +28,7 @@ bigScreenModal m =
             , style "background-image" <| getUrlAttribute <| getCurrentUrl m
             , style "background-size" <| getRealSizeAttribute m
             , style "transform" (getTranformTranslateAttribute m ++ getTranformScaleAttribute m)
+            , style "cursor" (getCursor m)
             , Draggable.mouseTrigger "big-image" DragMsg
             ]
             []
