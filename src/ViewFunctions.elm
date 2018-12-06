@@ -1,11 +1,12 @@
-module ViewFunctions exposing (getRealSizeAttribute, getShowBigScreenAttribute, getTranformScaleAttribute, getUrlAttribute, showImg, showImgs)
+module ViewFunctions exposing (getRealSizeAttribute, getShowBigScreenAttribute, getTranformScaleAttribute, getTranformTranslateAttribute, getUrlAttribute, showImg, showImgs)
 
 import Array
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Model exposing (..)
-import String exposing (fromFloat)
+import String exposing (fromFloat, fromInt)
+import Tuple
 import Update exposing (..)
 
 
@@ -43,9 +44,24 @@ getTranformScaleAttribute : Model -> String
 getTranformScaleAttribute m =
     let
         scaleStr =
-            fromFloat m.bigScreenScale
+            fromFloat m.bigImageScale
     in
     "scale(" ++ scaleStr ++ ")"
+
+
+getTranformTranslateAttribute : Model -> String
+getTranformTranslateAttribute m =
+    let
+        x =
+            Tuple.first m.position
+
+        y =
+            Tuple.second m.position
+
+        translateStr =
+            fromInt x ++ "px, " ++ fromInt y ++ "px"
+    in
+    "translate(" ++ translateStr ++ ")"
 
 
 getUrlAttribute : String -> String

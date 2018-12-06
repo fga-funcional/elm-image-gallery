@@ -1,6 +1,7 @@
 module Model exposing (Image, Model, getCurrentUrl, imageDecoder, init)
 
 import Array
+import Draggable
 import Json.Decode as D
 
 
@@ -9,7 +10,7 @@ type alias Model =
     , selectedImg : Int
     , showBigScreen : Bool
     , showRealSize : Bool
-    , bigScreenScale : Float
+    , bigImageScale : Float
     , leftArrowButton : String
     , rightArrowButton : String
     , dismissButton : String
@@ -17,6 +18,8 @@ type alias Model =
     , fullScreenButton : String
     , zoomInButton : String
     , zoomOutButton : String
+    , position : ( Int, Int )
+    , drag : Draggable.State String
     }
 
 
@@ -71,16 +74,20 @@ showRealSize =
     False
 
 
-bigScreenScale =
+bigImageScale =
     1.0
 
 
+position =
+    ( 0, 0 )
+
+
+drag =
+    Draggable.init
+
+
 init =
-    Model initialImages initialBigImage showBigScreen showRealSize bigScreenScale leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage zoomIn zoomOut
-
-
-getCurrentUrl m =
-    Maybe.withDefault "" <| Maybe.map .src (Array.get m.selectedImg m.imgs)
+    Model initialImages initialBigImage showBigScreen showRealSize bigImageScale leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage zoomIn zoomOut position drag
 
 
 imageDecoder : D.Decoder (Array.Array Image)
@@ -91,3 +98,7 @@ imageDecoder =
             (D.field "description" D.string)
             (D.field "src" D.string)
         )
+
+
+getCurrentUrl m =
+    Maybe.withDefault "" <| Maybe.map .src (Array.get m.selectedImg m.imgs)

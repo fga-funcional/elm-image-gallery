@@ -2,6 +2,7 @@ module Update exposing (Msg(..), init, subscriptions, update)
 
 import Array
 import Browser.Events exposing (onKeyDown)
+import Draggable
 import Html.Events exposing (keyCode)
 import Http exposing (..)
 import Json.Decode as D
@@ -21,6 +22,8 @@ type Msg
     | SelectPrev
     | FetchedImg (Result Http.Error (Array.Array Image))
     | FetchImgs
+    | OnDragBy Draggable.Delta
+    | DragMsg (Draggable.Msg String)
     | NoOp
 
 
@@ -30,7 +33,7 @@ init _ =
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update msg ({ position } as model) =
     case msg of
         ShowSelected idx ->
             ( { model | selectedImg = idx, showBigScreen = True }, Cmd.none )
@@ -39,28 +42,32 @@ update msg model =
             ( { model | showBigScreen = True }, Cmd.none )
 
         ShowResized ->
-            ( { model | showRealSize = False, bigScreenScale = 1 }, Cmd.none )
+            ( { model | showRealSize = False, bigImageScale = 1 }, Cmd.none )
 
         ShowRealSize ->
-            ( { model | showRealSize = True, bigScreenScale = 1 }, Cmd.none )
+            ( { model | showRealSize = True, bigImageScale = 1 }, Cmd.none )
 
         ZoomInBigScreen ->
-            ( { model | bigScreenScale = min 10 <| max 0.05 <| model.bigScreenScale + 0.1 * model.bigScreenScale }, Cmd.none )
+            ( { model | bigImageScale = min 10 <| max 0.05 <| model.bigImageScale + 0.1 * model.bigImageScale }, Cmd.none )
 
         ZoomOutBigScreen ->
-            ( { model | bigScreenScale = min 10 <| max 0.05 <| model.bigScreenScale - 0.1 * model.bigScreenScale }, Cmd.none )
+            if model.bigImageScale > 1 then
+                ( { model | bigImageScale = min 10 <| max 0.05 <| model.bigImageScale - 0.1 * model.bigImageScale }, Cmd.none )
+
+            else
+                ( { model | bigImageScale = min 10 <| max 0.05 <| model.bigImageScale - 0.1 * model.bigImageScale, position = ( 0, 0 ) }, Cmd.none )
 
         ResetBigScreenScale ->
-            ( { model | bigScreenScale = 1 }, Cmd.none )
+            ( { model | bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
 
         SelectNext ->
-            ( { model | selectedImg = fixIdx model <| model.selectedImg + 1, bigScreenScale = 1 }, Cmd.none )
+            ( { model | selectedImg = fixIdx model <| model.selectedImg + 1, bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
 
         SelectPrev ->
-            ( { model | selectedImg = fixIdx model <| model.selectedImg - 1, bigScreenScale = 1 }, Cmd.none )
+            ( { model | selectedImg = fixIdx model <| model.selectedImg - 1, bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
 
         HideSelected ->
-            ( { model | showBigScreen = False }, Cmd.none )
+            ( { model | showBigScreen = False, bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
 
         FetchImgs ->
             ( model, Http.send FetchedImg fetchImages )
@@ -73,13 +80,36 @@ update msg model =
                 Ok images ->
                     ( { model | imgs = images }, Cmd.none )
 
+        OnDragBy ( dx, dy ) ->
+            let
+                ( x, y ) =
+                    position
+            in
+            if model.bigImageScale > 1.0 then
+                ( { model | position = ( x + round dx, y + round dy ) }, Cmd.none )
+
+            else
+                ( { model | position = ( 0, 0 ) }, Cmd.none )
+
+        DragMsg dragMsg ->
+            Draggable.update dragConfig dragMsg model
+
         _ ->
             ( model, Cmd.none )
+
+
+
+-- UTIL FUNCTIONS
 
 
 fixIdx : Model -> Int -> Int
 fixIdx model idx =
     modBy (Array.length model.imgs) idx
+
+
+dragConfig : Draggable.Config String Msg
+dragConfig =
+    Draggable.basicConfig OnDragBy
 
 
 
@@ -89,7 +119,8 @@ fixIdx model idx =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ onKeyDown (D.map key keyCode)
+        [ onKeyDown (D.map getKey keyCode)
+        , Draggable.subscriptions DragMsg model.drag
         ]
 
 
@@ -106,8 +137,8 @@ fetchImages =
 -- SHORTCUTS
 
 
-key : Int -> Msg
-key keycode =
+getKey : Int -> Msg
+getKey keycode =
     case keycode of
         -- left
         37 ->

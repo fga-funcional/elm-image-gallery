@@ -1,6 +1,7 @@
 module View exposing (view)
 
 import Array
+import Draggable
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -12,7 +13,7 @@ import ViewFunctions exposing (..)
 view : Model -> Html Msg
 view model =
     div [ class "main" ]
-        [ h1 [] [ text "Welcome to the Gallery!!!" ]
+        [ h1 [] [ text "Elm Image Gallery" ]
         , showImgs model.imgs
         , bigScreenModal model
         ]
@@ -22,10 +23,11 @@ bigScreenModal m =
     div [ style "display" <| getShowBigScreenAttribute m ]
         [ div [ class "overlay" ] []
         , div
-            [ class "bigScreenModal"
+            [ class "bigImage"
             , style "background-image" <| getUrlAttribute <| getCurrentUrl m
             , style "background-size" <| getRealSizeAttribute m
-            , style "transform" <| getTranformScaleAttribute m
+            , style "transform" (getTranformTranslateAttribute m ++ getTranformScaleAttribute m)
+            , Draggable.mouseTrigger "big-image" DragMsg
             ]
             []
         , div [ class "bigScreenModal" ]

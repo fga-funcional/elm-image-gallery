@@ -31,7 +31,7 @@ h1 {
     }
 }
 
-.overlay, .bigScreenModal {
+.overlay, .bigImage {
     position: fixed;
 	height: 100%;
 	width: 100%;
@@ -39,14 +39,21 @@ h1 {
     left: 0;
 }
 
+.bigScreenModal {
+    position: fixed;
+	height: 100%;
+	width: 100%;
+}
+
 .overlay {
 	background-color: black;
 	opacity: 0.8;
 }
 
-.bigScreenModal {
+.bigImage {
 	background-position: center;
 	background-repeat: no-repeat;
+	cursor: "move";
 }
 
 .leftArrowButton, .rightArrowButton, .dismissButton, .toolButton {
