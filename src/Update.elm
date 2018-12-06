@@ -61,10 +61,18 @@ update msg ({ position } as model) =
             ( { model | bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
 
         SelectNext ->
-            ( { model | selectedImg = fixIdx model <| model.selectedImg + 1, bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
+            if model.showBigScreen then
+                ( { model | selectedImg = fixIdx model <| model.selectedImg + 1, bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
+
+            else
+                ( model, Cmd.none )
 
         SelectPrev ->
-            ( { model | selectedImg = fixIdx model <| model.selectedImg - 1, bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
+            if model.showBigScreen then
+                ( { model | selectedImg = fixIdx model <| model.selectedImg - 1, bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )
+
+            else
+                ( model, Cmd.none )
 
         HideSelected ->
             ( { model | showBigScreen = False, bigImageScale = 1, position = ( 0, 0 ) }, Cmd.none )

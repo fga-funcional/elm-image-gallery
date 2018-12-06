@@ -1,4 +1,4 @@
-module ViewFunctions exposing (getRealSizeAttribute, getShowBigScreenAttribute, getTranformScaleAttribute, getTranformTranslateAttribute, getUrlAttribute, showImg, showImgs)
+module ViewFunctions exposing (getImageCounter, getRealSizeAttribute, getShowBigScreenAttribute, getTranformScaleAttribute, getTranformTranslateAttribute, getUrlAttribute, showImg, showImgs)
 
 import Array
 import Html exposing (..)
@@ -67,3 +67,8 @@ getTranformTranslateAttribute m =
 getUrlAttribute : String -> String
 getUrlAttribute imgUrl =
     "url(\"" ++ imgUrl ++ "\")"
+
+
+getImageCounter : Model -> String
+getImageCounter m =
+    fromInt m.selectedImg ++ "/" ++ (fromInt <| Array.length m.imgs)

@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Model exposing (..)
+import String exposing (fromInt)
 import Update exposing (..)
 import ViewFunctions exposing (..)
 
@@ -39,6 +40,9 @@ bigScreenModal m =
                 , img [ class "toolButton", src m.fullScreenButton, onClick ShowResized ] []
                 , img [ class "toolButton", src m.zoomInButton, onClick ZoomInBigScreen ] []
                 , img [ class "toolButton", src m.zoomOutButton, onClick ZoomOutBigScreen ] []
+                ]
+            , div [ class "counter" ]
+                [ text (getImageCounter m)
                 ]
             ]
         ]
