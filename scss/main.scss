@@ -170,3 +170,13 @@ h1 {
         -o-transition: all 200ms ease-in-out;
     }
 }
+
+.descriptionDiv {
+    position: fixed;
+    bottom: 0;
+    text-shadow: 2pt 2pt 4pt #000000;
+    color: rgb(204, 196, 196);
+    font-size: 15pt;
+    padding-left: 20pt;
+    padding-bottom: 15pt;
+}

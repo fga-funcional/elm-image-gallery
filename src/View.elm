@@ -41,6 +41,9 @@ bigScreenModal m =
             , div [ class "arrowDivRight" ]
                 [ img [ class "rightArrowButton", src m.rightArrowButton, onClick SelectNext ] []
                 ]
+            , div [ class "descriptionDiv" ]
+                [ text (getCurrentDescription m)
+                ]
             , div [ class "toolsBar" ]
                 [ img [ class "toolButton", src m.realSizeButton, onClick ShowRealSize ] []
                 , img [ class "toolButton", src m.fullScreenButton, onClick ShowResized ] []

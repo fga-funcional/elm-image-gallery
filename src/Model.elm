@@ -1,4 +1,4 @@
-module Model exposing (Image, Model, getCurrentUrl, imageDecoder, init)
+module Model exposing (Image, Model, getCurrentUrl, getCurrentDescription, imageDecoder, init)
 
 import Array
 import Draggable
@@ -81,13 +81,19 @@ bigImageScale =
 position =
     ( 0, 0 )
 
-
 drag =
     Draggable.init
 
-
 init =
     Model initialImages initialBigImage showBigScreen showRealSize bigImageScale leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage zoomIn zoomOut position drag
+
+getCurrentUrl : Model -> String
+getCurrentUrl m =
+    Maybe.withDefault "" <| Maybe.map .src (Array.get m.selectedImg m.imgs)
+
+getCurrentDescription : Model -> String
+getCurrentDescription m =
+    Maybe.withDefault "" <| Maybe.map .description (Array.get m.selectedImg m.imgs)
 
 
 imageDecoder : D.Decoder (Array.Array Image)
@@ -98,7 +104,3 @@ imageDecoder =
             (D.field "description" D.string)
             (D.field "src" D.string)
         )
-
-
-getCurrentUrl m =
-    Maybe.withDefault "" <| Maybe.map .src (Array.get m.selectedImg m.imgs)
