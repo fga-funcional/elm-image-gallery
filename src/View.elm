@@ -21,13 +21,22 @@ view model =
 bigScreenModal m =
     div [ style "display" <| getShowBigScreenAttribute m ]
         [ div [ class "overlay" ] []
-        , div [ class "bigScreenModal", style "background-image" (getUrlAttribute <| getCurrentUrl m), style "background-size" <| getRealSizeAttribute m ]
+        , div
+            [ class "bigScreenModal"
+            , style "background-image" <| getUrlAttribute <| getCurrentUrl m
+            , style "background-size" <| getRealSizeAttribute m
+            , style "transform" <| getTranformScaleAttribute m
+            ]
+            []
+        , div [ class "bigScreenModal" ]
             [ img [ class "dismissButton", src m.dismissButton, onClick HideSelected ] []
             , img [ class "leftArrowButton", src m.leftArrowButton, onClick SelectPrev ] []
             , img [ class "rightArrowButton", src m.rightArrowButton, onClick SelectNext ] []
             , div [ class "toolsBar" ]
                 [ img [ class "toolButton", src m.realSizeButton, onClick ShowRealSize ] []
                 , img [ class "toolButton", src m.fullScreenButton, onClick ShowResized ] []
+                , img [ class "toolButton", src m.zoomInButton, onClick ZoomInBigScreen ] []
+                , img [ class "toolButton", src m.zoomOutButton, onClick ZoomOutBigScreen ] []
                 ]
             ]
         ]

@@ -1,10 +1,11 @@
-module ViewFunctions exposing (getRealSizeAttribute, getShowBigScreenAttribute, getUrlAttribute, showImg, showImgs)
+module ViewFunctions exposing (getRealSizeAttribute, getShowBigScreenAttribute, getTranformScaleAttribute, getUrlAttribute, showImg, showImgs)
 
 import Array
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Model exposing (..)
+import String exposing (fromFloat)
 import Update exposing (..)
 
 
@@ -36,6 +37,15 @@ getShowBigScreenAttribute m =
 
     else
         "none"
+
+
+getTranformScaleAttribute : Model -> String
+getTranformScaleAttribute m =
+    let
+        scaleStr =
+            fromFloat m.bigScreenScale
+    in
+    "scale(" ++ scaleStr ++ ")"
 
 
 getUrlAttribute : String -> String

@@ -4,7 +4,7 @@ import Array
 import Browser.Events exposing (onKeyDown)
 import Html.Events exposing (keyCode)
 import Http exposing (..)
-import Json.Decode as Decode
+import Json.Decode as D
 import Model exposing (Image, Model, imageDecoder)
 
 
@@ -13,6 +13,9 @@ type Msg
     | ShowCurrent
     | ShowRealSize
     | ShowResized
+    | ZoomInBigScreen
+    | ZoomOutBigScreen
+    | ResetBigScreenScale
     | HideSelected
     | SelectNext
     | SelectPrev
@@ -36,16 +39,25 @@ update msg model =
             ( { model | showBigScreen = True }, Cmd.none )
 
         ShowResized ->
-            ( { model | showRealSize = False }, Cmd.none )
+            ( { model | showRealSize = False, bigScreenScale = 1 }, Cmd.none )
 
         ShowRealSize ->
-            ( { model | showRealSize = True }, Cmd.none )
+            ( { model | showRealSize = True, bigScreenScale = 1 }, Cmd.none )
+
+        ZoomInBigScreen ->
+            ( { model | bigScreenScale = min 10 <| max 0.05 <| model.bigScreenScale + 0.1 * model.bigScreenScale }, Cmd.none )
+
+        ZoomOutBigScreen ->
+            ( { model | bigScreenScale = min 10 <| max 0.05 <| model.bigScreenScale - 0.1 * model.bigScreenScale }, Cmd.none )
+
+        ResetBigScreenScale ->
+            ( { model | bigScreenScale = 1 }, Cmd.none )
 
         SelectNext ->
-            ( { model | selectedImg = fixIdx model <| model.selectedImg + 1 }, Cmd.none )
+            ( { model | selectedImg = fixIdx model <| model.selectedImg + 1, bigScreenScale = 1 }, Cmd.none )
 
         SelectPrev ->
-            ( { model | selectedImg = fixIdx model <| model.selectedImg - 1 }, Cmd.none )
+            ( { model | selectedImg = fixIdx model <| model.selectedImg - 1, bigScreenScale = 1 }, Cmd.none )
 
         HideSelected ->
             ( { model | showBigScreen = False }, Cmd.none )
@@ -70,8 +82,32 @@ fixIdx model idx =
     modBy (Array.length model.imgs) idx
 
 
-key : Bool -> Int -> Msg
-key isDown keycode =
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch
+        [ onKeyDown (D.map key keyCode)
+        ]
+
+
+
+-- HTTP
+
+
+fetchImages : Http.Request (Array.Array Image)
+fetchImages =
+    Http.get "http://localhost:3000/images" imageDecoder
+
+
+
+-- SHORTCUTS
+
+
+key : Int -> Msg
+key keycode =
     case keycode of
         -- left
         37 ->
@@ -105,25 +141,29 @@ key isDown keycode =
         70 ->
             ShowResized
 
+        -- plus
+        61 ->
+            ZoomInBigScreen
+
+        -- plus numeric
+        107 ->
+            ZoomInBigScreen
+
+        -- minus
+        173 ->
+            ZoomOutBigScreen
+
+        -- minus numeric
+        109 ->
+            ZoomOutBigScreen
+
+        -- 0
+        48 ->
+            ResetBigScreenScale
+
+        -- 0 numeric
+        96 ->
+            ResetBigScreenScale
+
         _ ->
             NoOp
-
-
-
--- SUBSCRIPTIONS
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.batch
-        [ onKeyDown (Decode.map (key True) keyCode)
-        ]
-
-
-
--- HTTP
-
-
-fetchImages : Http.Request (Array.Array Image)
-fetchImages =
-    Http.get "http://localhost:3000/images" imageDecoder
