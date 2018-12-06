@@ -127,7 +127,7 @@ h1 {
 }
 
 .arrowDivLeft, .arrowDivRight {
-    position: absolute;
+    position: fixed;
     height:70%;
     width: 70pt;
     top: 50%;
@@ -153,11 +153,12 @@ h1 {
 }
 
 .dismissButtonDiv {
+    position: fixed;
     top: 0;
+    right: 0;
     height: 40pt;
     padding: 5pt;
     width: 60pt;
-    float: right;
     display: inline-block;
 
     &:hover {
@@ -177,6 +178,6 @@ h1 {
     text-shadow: 2pt 2pt 4pt #000000;
     color: rgb(204, 196, 196);
     font-size: 15pt;
-    padding-left: 20pt;
-    padding-bottom: 15pt;
+    padding-left: 6pt;
+    padding-bottom: 30pt;
 }
