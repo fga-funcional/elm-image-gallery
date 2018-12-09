@@ -9,6 +9,26 @@ Gallery for images written in Elm lang. Contains a pre-visualization with thumbn
 * Real size
 * Shortcuts!
 
+### Shortchuts
+* **Enter:** Go full screen
+* **Esc:** Exit full screen
+* **Right Arrow:** Next image
+* **Left Arrow:** Previous image
+* **h:** Previous image _(vim like)_
+* **l:** Next image _(vim like)_
+* **+:** Zoom in _(numeric keyboard also)_
+* **-:** Zoom out _(numeric keyboard also)_
+* **r:** Real size
+* **f:** Fit to screen
+
+### Screens
+
+#### All images
+![Thumbnails](https://raw.githubusercontent.com/fga-funcional/elm-image-gallery/master/images/Elm-image-gallery-thumbnails.png)
+
+#### Visualizing image
+![Big Screen](https://github.com/fga-funcional/elm-image-gallery/blob/master/images/Elm-image-gallery-big-screen.png)
+
 ## Building
 
 ### Requirements
