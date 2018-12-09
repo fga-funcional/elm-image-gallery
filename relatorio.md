@@ -1,12 +1,13 @@
 # Relatório
 
-## Aluno: Ícaro Pires de Souza Aragão | Matrícula: 15/0129815
-## Aluno: Vinicius Ferreira Bernardo de Lima | Matrícula: 15/0151331
+**Alunos:** Ícaro Pires de Souza Aragão (15/0129815) e Vinicius Ferreira Bernardo de Lima (15/0151331)
+
+Backend: [backend](https://github.com/fga-funcional/haskell-image-gallery)
 
 ## Desenvolvimento técnico
 
 ### Mecanismo de persistência
-Foi utilizado o banco de dados Postgres, integrado através da biblioteca [PostgreSQL Simple] (https://hackage.haskell.org/package/postgresql-simple). Dessa biblioteca também foi utilizado o recurso de migrations para que a tabela no banco fosse criada automaticamente.
+Foi utilizado o banco de dados Postgres, integrado através da biblioteca [postgresql-simple](https://hackage.haskell.org/package/postgresql-simple) . Dessa biblioteca também foi utilizado o recurso de migrations para que a tabela no banco fosse criada automaticamente.
 
 ### Recursos avançados das linguagens
 Se se encaixar na categoria, no haskell foram utilizadas várias mônadas para lidar com o IO e blocos utilizando `do`.
@@ -34,12 +35,22 @@ Sim, foi tomado o cuidado de adicionar transições on hover, evitar cores que s
 ## Pronto para produção?
 Quase. O back-end está integrado com o docker mas eu não o colocaria em produção sem autenticação nas rotas e sem definir melhor algumas questões de timeout em requisições e outros mecanismos de proteção. Já o front-end não está integrado com nenhum servidor, mas com relação ao código fonte, ele já poderia ser utilizado normalmente, alterando apenas a rota da qual ela obteria as imagens.
 
-## Integração front + back (2,5 pts)
+## Integração front + back 
 ### Front usa backend como mecanismo de persistência?
-Sim. Mas, atualmente, o frontend consegue apenas realizar requisição GET no backend para listar as imagens na galeria.
+Sim, mas como a intenção da galeria era apenas de visualização, no frontend só foram implementadas funcionalidades que utilizam o método HTTP GET. As imagens são cadastradas na API através de outros mecanismos.
 
 ### Conseguiu conectar os dois sistemas adequadamente?
-Sim. Através do container docker do backend usando scotty, o frontend consegue realizar requisições no backend em endpoints implementados.
+Sim, as rotas são expostas pelo backend de forma que o front-end só precisa realizar requisições HTTP. Porém não foram implementadas autenticações e nem soluções de produção relativas ao CORS, por exemplo.
 
 ### Consegue rodar mais de uma instâcia (discriminada por URL, por exemplo)
-Sim. É possível instanciar várias réplicas do container do backend e servi-los em urls diferentes ou até mesmo em portas diferentes num mesmo servidor.
+Sim, uma vez que o backend está dockerizado, para adicionar instâncias, necessário apenas subir outra instância com host ou porta diferente. Já o front-end não está integrado a um servidor, mas no código fonte também não há nenhum impedimento nesse sentido.
+
+## Método
+### Possui sistema de build?
+Sim, no repositório do frontend existe o script [compile.sh](https://github.com/fga-funcional/elm-image-gallery/blob/master/compile.sh) que compila o SASS para CSS e o Elm para JS, que já estão adicionados num arquivo em HTML (mais detalhes no README). Já o backend está dockerizado, então seria só subir o docker-compose.
+
+### Testes unitários e boas práticas?
+Não foram implementados testes, até porque os compiladores já dão garantias consideráveis. Apesar disso, outras boas práticas foram adotadas, como a separação do código fonte em arquivos separados, a adoção de bons nomes para funções, funções atômicas e a tentativa de escrever código idiomático.
+
+### Implantou em algum lugar?
+Não.
