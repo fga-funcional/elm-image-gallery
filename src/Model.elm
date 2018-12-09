@@ -1,12 +1,16 @@
-module Model exposing (Image, Model, getCurrentUrl, getCurrentDescription, imageDecoder, init)
+module Model exposing (Image, Model, getCurrentDescription, getCurrentUrl, imageDecoder, imagesPath, init)
 
 import Array
 import Draggable
 import Json.Decode as D
 
 
+imagesPath =
+    "http://localhost:3000/images"
+
+
 type alias Model =
-    { imgs : Array.Array Image
+    { images : Array.Array Image
     , selectedImg : Int
     , showBigScreen : Bool
     , showRealSize : Bool
@@ -81,19 +85,23 @@ bigImageScale =
 position =
     ( 0, 0 )
 
+
 drag =
     Draggable.init
+
 
 init =
     Model initialImages initialBigImage showBigScreen showRealSize bigImageScale leftArrowImage rightArrowImage dismissImage realSizeImage fullScreenImage zoomIn zoomOut position drag
 
+
 getCurrentUrl : Model -> String
 getCurrentUrl m =
-    Maybe.withDefault "" <| Maybe.map .src (Array.get m.selectedImg m.imgs)
+    Maybe.withDefault "" <| Maybe.map .src (Array.get m.selectedImg m.images)
+
 
 getCurrentDescription : Model -> String
 getCurrentDescription m =
-    Maybe.withDefault "" <| Maybe.map .description (Array.get m.selectedImg m.imgs)
+    Maybe.withDefault "" <| Maybe.map .description (Array.get m.selectedImg m.images)
 
 
 imageDecoder : D.Decoder (Array.Array Image)

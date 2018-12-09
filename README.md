@@ -38,7 +38,7 @@ Gallery for images written in Elm lang. Contains a pre-visualization with thumbn
 
 ### Steps
 1. Clone repository
-2. run `./compile.sh`
+2. Run `./compile.sh`
 
 ### Compile script
 When you just run the script without arguments, the SASS will be compiled to CSS, the Elm to JS and then minified. The resulting files are already integrated with index.html.
@@ -48,7 +48,7 @@ Running with elm or sass argument will compile just the sass or elm and then kee
 It's also possible to see the description of the commands with `--help` flag.
 
 ## Using
-It's necessary to set the right url for the images end-point at the source code.
+It's necessary to set the right url for the images end-point at the source code. To this change the imagesPath constant value at [Model.elm](https://github.com/fga-funcional/elm-image-gallery/blob/master/src/Model.elm#L8) .
 
 ### Expected JSON
 The input Json is a list in which each element must have the following fields:

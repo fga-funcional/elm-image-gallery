@@ -6,7 +6,7 @@ import Draggable
 import Html.Events exposing (keyCode)
 import Http exposing (..)
 import Json.Decode as D
-import Model exposing (Image, Model, imageDecoder)
+import Model exposing (Image, Model, imageDecoder, imagesPath)
 
 
 type Msg
@@ -86,7 +86,7 @@ update msg ({ position } as model) =
                     ( model, Cmd.none )
 
                 Ok images ->
-                    ( { model | imgs = images }, Cmd.none )
+                    ( { model | images = images }, Cmd.none )
 
         OnDragBy ( dx, dy ) ->
             let
@@ -112,7 +112,7 @@ update msg ({ position } as model) =
 
 fixIdx : Model -> Int -> Int
 fixIdx model idx =
-    modBy (Array.length model.imgs) idx
+    modBy (Array.length model.images) idx
 
 
 dragConfig : Draggable.Config String Msg
@@ -138,7 +138,7 @@ subscriptions model =
 
 fetchImages : Http.Request (Array.Array Image)
 fetchImages =
-    Http.get "http://localhost:3000/images" imageDecoder
+    Http.get imagesPath imageDecoder
 
 
 

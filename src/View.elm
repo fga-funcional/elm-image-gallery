@@ -15,7 +15,7 @@ view : Model -> Html Msg
 view model =
     div [ class "main" ]
         [ h1 [] [ text "Elm Image Gallery" ]
-        , showImgs model.imgs
+        , showImgs model.images
         , bigScreenModal model
         ]
 

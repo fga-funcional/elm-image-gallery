@@ -80,4 +80,4 @@ getCursor m =
 
 getImageCounter : Model -> String
 getImageCounter m =
-    fromInt (m.selectedImg + 1) ++ "/" ++ (fromInt <| Array.length m.imgs)
+    fromInt (m.selectedImg + 1) ++ "/" ++ (fromInt <| Array.length m.images)
