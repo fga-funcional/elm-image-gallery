@@ -72,6 +72,7 @@ if [ "$1" == "--help" ]; then
 	echo "both			compile elm, minify js and compile sass"
 	echo ""
 	echo "If no option is passed, 'both' will be assumed."
+	exit 0
 fi
 
 mkdir -p $STATIC_FOLDER
