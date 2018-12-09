@@ -184,7 +184,11 @@ getKey keycode =
         61 ->
             ZoomInBigScreen
 
-        -- plus numeric
+        -- plus (chrome)
+        187 ->
+            ZoomInBigScreen
+
+        -- plus (numeric keyboard)
         107 ->
             ZoomInBigScreen
 
@@ -192,7 +196,11 @@ getKey keycode =
         173 ->
             ZoomOutBigScreen
 
-        -- minus numeric
+        -- minus (chrome)
+        189 ->
+            ZoomOutBigScreen
+
+        -- minus (numeric keyboard)
         109 ->
             ZoomOutBigScreen
 
@@ -200,7 +208,7 @@ getKey keycode =
         48 ->
             ResetBigScreenScale
 
-        -- 0 numeric
+        -- 0 (numeric keyboard)
         96 ->
             ResetBigScreenScale
 
