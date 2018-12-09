@@ -1,5 +1,8 @@
 # Relatório
 
+## Aluno: Ícaro Pires de Souza Aragão | Matrícula: 15/0129815
+## Aluno: Vinicius Ferreira Bernardo de Lima | Matrícula: 15/0151331
+
 ## Desenvolvimento técnico
 
 ### Mecanismo de persistência
@@ -31,5 +34,12 @@ Sim, foi tomado o cuidado de adicionar transições on hover, evitar cores que s
 ## Pronto para produção?
 Quase. O back-end está integrado com o docker mas eu não o colocaria em produção sem autenticação nas rotas e sem definir melhor algumas questões de timeout em requisições e outros mecanismos de proteção. Já o front-end não está integrado com nenhum servidor, mas com relação ao código fonte, ele já poderia ser utilizado normalmente, alterando apenas a rota da qual ela obteria as imagens.
 
-## Integração front + back
-## Método
+## Integração front + back (2,5 pts)
+### Front usa backend como mecanismo de persistência?
+Sim. Mas, atualmente, o frontend consegue apenas realizar requisição GET no backend para listar as imagens na galeria.
+
+### Conseguiu conectar os dois sistemas adequadamente?
+Sim. Através do container docker do backend usando scotty, o frontend consegue realizar requisições no backend em endpoints implementados.
+
+### Consegue rodar mais de uma instâcia (discriminada por URL, por exemplo)
+Sim. É possível instanciar várias réplicas do container do backend e servi-los em urls diferentes ou até mesmo em portas diferentes num mesmo servidor.
